@@ -175,8 +175,8 @@ canvas { display: block; }
 
 @media (min-width: 900px) {
   #touchControls { display: none; } /* em telas grandes, assume teclado */
-  #menuScreen, #gameoverScreen { flex-direction: row; align-items: flex-start; justify-content: center; gap: 36px; }
-  .leaderboardPanel { margin-top: 40px; }
+  #menuScreen, #gameoverScreen { flex-direction: row; align-items: center; justify-content: center; gap: 36px; }
+  .leaderboardPanel { margin-top: 0; }
 }
 
 /* ---------------- Texto flutuante ---------------- */
