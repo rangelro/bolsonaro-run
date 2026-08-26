@@ -1,0 +1,6 @@
+name = "bolsonaro-run"
+compatibility_date = "2024-09-23"
+
+[[kv_namespaces]]
+binding = "LEADERBOARD_KV"
+id = "75585436d38149bdb4cb56531c9d3df7"

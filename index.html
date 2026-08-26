@@ -20,7 +20,7 @@
         <div id="comboText">COMBO x1</div>
       </div>
       <div id="gapWrap">
-        <div id="gapLabel">DISTÂNCIA DO PERSEGUIDOR</div>
+        <div id="gapLabel">DISTÂNCIA DO LULA</div>
         <div id="gapBarBg"><div id="gapBarFg"></div></div>
       </div>
     </div>
@@ -49,35 +49,51 @@
     <button id="skipIntroBtn">PULAR ▶</button>
   </div>
 
+  <!-- ==================== Modal de nickname ==================== -->
+  <div id="nicknameModal">
+    <div class="nicknameCard">
+      <h2>Como podemos te chamar?</h2>
+      <input id="nicknameInput" type="text" maxlength="14" placeholder="Seu nickname" autocomplete="off">
+      <button class="primaryBtn" id="nicknameConfirmBtn">CONFIRMAR</button>
+    </div>
+  </div>
+
   <!-- ==================== Tela de Menu ==================== -->
   <div class="screen" id="menuScreen" style="display:flex;">
-    <h1>🏃 Bolsonaro Run</h1>
-    <p>Desvie, pule, agache e fuja do perseguidor pelas 3 faixas.</p>
-    <div class="menuStats">
-      <div><div class="label" style="color:#9db0c7;font-size:11px;">RECORDE</div><div class="bigStat" id="menuHighscore">0</div></div>
-      <div><div class="label" style="color:#9db0c7;font-size:11px;">MOEDAS TOTAIS</div><div class="bigStat" id="menuTotalCoins">0</div></div>
-    </div>
-    <div id="skinSelector">
-      <div class="skinLabel">PERSONAGEM</div>
-      <div class="skinOptions">
-        <button class="skinOption" data-skin="selecao">
-          <span class="skinSwatch skinSwatchSelecao"></span>
-          Seleção
-        </button>
-        <button class="skinOption" data-skin="presidiario">
-          <span class="skinSwatch skinSwatchPresidiario"></span>
-          Presidiário
-        </button>
-        <button class="skinOption" data-skin="presidente">
-          <span class="skinSwatch skinSwatchPresidente"></span>
-          Presidente
-        </button>
+    <div class="screenMain">
+      <h1>🏃 Bolsonaro Run</h1>
+      <p>Desvie, pule, agache e fuja do Lula pelas 3 faixas.</p>
+      <div class="menuStats">
+        <div><div class="label" style="color:#9db0c7;font-size:11px;">RECORDE</div><div class="bigStat" id="menuHighscore">0</div></div>
+        <div><div class="label" style="color:#9db0c7;font-size:11px;">MOEDAS TOTAIS</div><div class="bigStat" id="menuTotalCoins">0</div></div>
       </div>
+      <div id="skinSelector">
+        <div class="skinLabel">PERSONAGEM</div>
+        <div class="skinOptions">
+          <button class="skinOption" data-skin="selecao">
+            <span class="skinSwatch skinSwatchSelecao"></span>
+            Seleção
+          </button>
+          <button class="skinOption" data-skin="presidiario">
+            <span class="skinSwatch skinSwatchPresidiario"></span>
+            Presidiário
+          </button>
+          <button class="skinOption" data-skin="presidente">
+            <span class="skinSwatch skinSwatchPresidente"></span>
+            Presidente
+          </button>
+        </div>
+      </div>
+      <button class="primaryBtn" id="startBtn">JOGAR</button>
+      <p style="margin-top:18px;font-size:12px;color:#9db0c7;">
+        ← → trocar de faixa &nbsp;|&nbsp; ↑ pular &nbsp;|&nbsp; ↓ agachar &nbsp;|&nbsp; ESC pausar
+      </p>
+      <button class="linkBtn" id="changeNicknameBtn">trocar nickname</button>
     </div>
-    <button class="primaryBtn" id="startBtn">JOGAR</button>
-    <p style="margin-top:18px;font-size:12px;color:#9db0c7;">
-      ← → trocar de faixa &nbsp;|&nbsp; ↑ pular &nbsp;|&nbsp; ↓ agachar &nbsp;|&nbsp; ESC pausar
-    </p>
+    <div class="leaderboardPanel">
+      <div class="leaderboardTitle">🏆 RANKING TOP 10</div>
+      <div class="leaderboardList" id="leaderboardListMenu"></div>
+    </div>
   </div>
 
   <!-- ==================== Tela de Pausa ==================== -->
@@ -89,12 +105,19 @@
 
   <!-- ==================== Tela de Game Over ==================== -->
   <div class="screen" id="gameoverScreen">
-    <h2>VOCÊ FOI ALCANÇADO!</h2>
-    <div id="newRecordBadge">🏆 NOVO RECORDE!</div>
-    <p class="statLine">Pontuação final</p>
-    <div class="bigStat" id="overFinalScore">0</div>
-    <p class="statLine" style="margin-top:10px;">Recorde: <span id="overHighscore">0</span> &nbsp;|&nbsp; Moedas nesta corrida: <span id="overCoins">0</span></p>
-    <button class="primaryBtn" id="restartBtn">JOGAR DE NOVO</button>
+    <div class="screenMain">
+      <h2>VOCÊ FOI PEGO PELO LULA!</h2>
+      <div id="newRecordBadge">🏆 NOVO RECORDE!</div>
+      <div id="topTenBadge"></div>
+      <p class="statLine">Pontuação final</p>
+      <div class="bigStat" id="overFinalScore">0</div>
+      <p class="statLine" style="margin-top:10px;">Recorde: <span id="overHighscore">0</span> &nbsp;|&nbsp; Moedas nesta corrida: <span id="overCoins">0</span></p>
+      <button class="primaryBtn" id="restartBtn">JOGAR DE NOVO</button>
+    </div>
+    <div class="leaderboardPanel">
+      <div class="leaderboardTitle">🏆 RANKING TOP 10</div>
+      <div class="leaderboardList" id="leaderboardListGameover"></div>
+    </div>
   </div>
 
 </div>

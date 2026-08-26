@@ -72,6 +72,52 @@ canvas { display: block; }
 .screen p, .screen .statLine { color: #ddd; font-size: 15px; margin: 4px 0; }
 .screen .bigStat { color: #fff; font-size: 22px; font-weight: bold; }
 
+.screenMain { display: flex; flex-direction: column; align-items: center; }
+#menuScreen, #gameoverScreen { overflow-y: auto; }
+
+.linkBtn {
+  margin-top: 14px; background: none; border: none; color: #6fa8dc; font-size: 12px;
+  text-decoration: underline; cursor: pointer; padding: 4px;
+}
+
+/* ---------------- Ranking (top 10) ---------------- */
+.leaderboardPanel {
+  margin-top: 22px; width: 240px; max-width: 90vw; text-align: left;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px; padding: 14px; flex-shrink: 0;
+}
+.leaderboardTitle { color: #ffd54a; font-size: 13px; font-weight: bold; letter-spacing: 0.5px; margin-bottom: 10px; }
+.leaderboardList { display: flex; flex-direction: column; gap: 6px; }
+.leaderboardEmpty { color: #9db0c7; font-size: 12px; }
+.lbRow { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #dfe6ee; padding: 4px 6px; border-radius: 6px; }
+.lbRank { width: 20px; color: #9db0c7; font-weight: bold; }
+.lbNick { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lbScore { color: #ffd54a; font-weight: bold; }
+.lbRowMine { background: rgba(46,134,222,0.18); border: 1px solid rgba(46,134,222,0.6); }
+
+/* ---------------- Modal de nickname ---------------- */
+#nicknameModal {
+  position: absolute; inset: 0; background: rgba(4,8,16,0.92);
+  display: none; align-items: center; justify-content: center;
+  z-index: 50; pointer-events: all;
+}
+.nicknameCard {
+  background: #141c2c; border: 1px solid rgba(255,255,255,0.12); border-radius: 14px;
+  padding: 26px 30px; text-align: center; max-width: 320px;
+}
+.nicknameCard h2 { color: #fff; font-size: 20px; margin: 0 0 16px; }
+#nicknameInput {
+  width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 15px;
+  border-radius: 8px; border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.08); color: #fff; outline: none;
+}
+#nicknameInput:focus { border-color: #2e86de; }
+
+#topTenBadge {
+  display: none; margin-top: 8px; padding: 4px 14px; border-radius: 20px;
+  background: #ffd54a; color: #2b2205; font-weight: bold; font-size: 13px;
+}
+
 /* ---------------- Seletor de skin (menu) ---------------- */
 #skinSelector { margin-top: 18px; }
 .skinLabel { color: #9db0c7; font-size: 11px; letter-spacing: 0.5px; margin-bottom: 8px; }
@@ -129,6 +175,8 @@ canvas { display: block; }
 
 @media (min-width: 900px) {
   #touchControls { display: none; } /* em telas grandes, assume teclado */
+  #menuScreen, #gameoverScreen { flex-direction: row; align-items: flex-start; justify-content: center; gap: 36px; }
+  .leaderboardPanel { margin-top: 40px; }
 }
 
 /* ---------------- Texto flutuante ---------------- */

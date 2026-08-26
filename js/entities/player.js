@@ -79,7 +79,7 @@ export class Player {
   // Materiais dependem da skin escolhida; forma/pose do corpo é sempre a mesma.
   _skinMaterials(skin) {
     const skinMat = new THREE.MeshStandardMaterial({ color: 0xf5c8a0, roughness: 0.7 });
-    const hairMat = new THREE.MeshStandardMaterial({ color: 0xb0ada8, roughness: 0.8 }); // grisalho
+    const hairMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.8 }); // preto
     const shoeMat = new THREE.MeshStandardMaterial({ color: 0x1c1c1c, roughness: 0.6 });
 
     if (skin === 'presidiario') {

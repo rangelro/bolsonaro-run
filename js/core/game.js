@@ -20,7 +20,7 @@ export class Game {
     this.audio = new AudioManager();
 
     this.ui = new UIManager({
-      onStart: () => this.startRun(),
+      onStart: () => this.handleStartClick(),
       onRestart: (toMenu) => toMenu ? this.goToMenu() : this.startRun(),
       onPause: () => this.pause(),
       onResume: () => this.resume(),
@@ -29,11 +29,13 @@ export class Game {
       onRight: () => this.moveLane(1),
       onJump: () => this.doJump(),
       onSlide: () => this.doSlide(),
-      onSelectSkin: (skin) => this.selectSkin(skin)
+      onSelectSkin: (skin) => this.selectSkin(skin),
+      onChangeNickname: () => this.ui.showNicknamePrompt((nick) => this.setNickname(nick))
     });
     this.ui.setMuteIcon(this.audio.muted);
 
     this.skin = localStorage.getItem(CONFIG.STORAGE_KEYS.skin) || 'selecao';
+    this.nickname = localStorage.getItem(CONFIG.STORAGE_KEYS.nickname) || '';
 
     this._initThree();
     this._initEntities();
@@ -53,6 +55,7 @@ export class Game {
         this.ui.showMenu(this.highscore, this.totalCoins, this.skin);
       });
     }
+    this.refreshLeaderboard(); // assíncrono — não trava a renderização inicial do menu
     this._loop();
   }
 
@@ -61,6 +64,51 @@ export class Game {
     localStorage.setItem(CONFIG.STORAGE_KEYS.skin, skin);
     this.player.setSkin(skin);
     this.ui.setSkinSelection(skin);
+  }
+
+  handleStartClick() {
+    if (!this.nickname) {
+      this.ui.showNicknamePrompt((nick) => {
+        this.setNickname(nick);
+        this.startRun();
+      });
+    } else {
+      this.startRun();
+    }
+  }
+
+  setNickname(nick) {
+    this.nickname = nick;
+    localStorage.setItem(CONFIG.STORAGE_KEYS.nickname, nick);
+  }
+
+  // Busca o top 10 global; falha em silêncio (ex.: Live Server local sem backend) —
+  // o jogo continua jogável normalmente sem ranking.
+  async refreshLeaderboard() {
+    try {
+      const res = await fetch(CONFIG.LEADERBOARD_ENDPOINT);
+      if (!res.ok) return;
+      const data = await res.json();
+      this.ui.renderLeaderboard(data.top10 || [], this.nickname);
+    } catch {
+      // offline / sem backend — silencioso
+    }
+  }
+
+  async _submitScore(score) {
+    try {
+      const res = await fetch(CONFIG.LEADERBOARD_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nick: this.nickname, score })
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      this.ui.renderLeaderboard(data.top10 || [], this.nickname);
+      if (data.rank) this.ui.showTopTenBadge(data.rank);
+    } catch {
+      // offline / sem backend — silencioso, jogo continua normal
+    }
   }
 
   // ---------------------------------------------------------
@@ -334,6 +382,7 @@ export class Game {
   goToMenu() {
     this.state = GAME_STATE.MENU;
     this.ui.showMenu(this.highscore, this.totalCoins, this.skin);
+    this.refreshLeaderboard();
   }
 
   triggerGameOver() {
@@ -353,6 +402,8 @@ export class Game {
       score: this.score, highscore: this.highscore,
       isNewRecord, runCoins: this.runCoins
     });
+
+    this._submitScore(Math.floor(this.score)); // assíncrono — não trava a tela de game over
   }
 
   // ---------------------------------------------------------

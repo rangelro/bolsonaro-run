@@ -36,7 +36,14 @@ export class UIManager {
       muteBtn: document.getElementById('muteBtn'),
       pauseBtn: document.getElementById('pauseBtn'),
       touchControls: document.getElementById('touchControls'),
-      skinOptions: Array.from(document.querySelectorAll('.skinOption'))
+      skinOptions: Array.from(document.querySelectorAll('.skinOption')),
+      nicknameModal: document.getElementById('nicknameModal'),
+      nicknameInput: document.getElementById('nicknameInput'),
+      nicknameConfirmBtn: document.getElementById('nicknameConfirmBtn'),
+      changeNicknameBtn: document.getElementById('changeNicknameBtn'),
+      leaderboardListMenu: document.getElementById('leaderboardListMenu'),
+      leaderboardListGameover: document.getElementById('leaderboardListGameover'),
+      topTenBadge: document.getElementById('topTenBadge')
     };
 
     this._bindStaticButtons();
@@ -63,6 +70,8 @@ export class UIManager {
     this.el.skinOptions.forEach((btn) => {
       btn.addEventListener('click', () => this.cb.onSelectSkin(btn.dataset.skin));
     });
+
+    this.el.changeNicknameBtn.addEventListener('click', () => this.cb.onChangeNickname());
   }
 
   setSkinSelection(skin) {
@@ -128,6 +137,55 @@ export class UIManager {
     this.el.overHighscore.textContent = formatNumber(highscore);
     this.el.overCoins.textContent = formatNumber(runCoins);
     this.el.newRecord.style.display = isNewRecord ? 'block' : 'none';
+    this.el.topTenBadge.style.display = 'none'; // resultado do envio chega assíncrono, depois
+  }
+
+  // Modal de nickname — mesmo padrão de callback dinâmico do showIntro (onclick reatribuído a cada chamada)
+  showNicknamePrompt(onConfirm) {
+    const confirm = () => {
+      const nick = this.el.nicknameInput.value.trim().slice(0, 14);
+      if (!nick) return;
+      this.el.nicknameModal.style.display = 'none';
+      onConfirm(nick);
+    };
+    this.el.nicknameConfirmBtn.onclick = confirm;
+    this.el.nicknameInput.onkeydown = (e) => { if (e.key === 'Enter') confirm(); };
+    this.el.nicknameModal.style.display = 'flex';
+    this.el.nicknameInput.value = '';
+    this.el.nicknameInput.focus();
+  }
+
+  renderLeaderboard(entries, myNick) {
+    [this.el.leaderboardListMenu, this.el.leaderboardListGameover].forEach((list) => {
+      list.innerHTML = '';
+      if (!entries || entries.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'leaderboardEmpty';
+        empty.textContent = 'Ainda sem pontuações. Seja o primeiro!';
+        list.appendChild(empty);
+        return;
+      }
+      entries.forEach((entry, i) => {
+        const row = document.createElement('div');
+        row.className = 'lbRow' + (entry.nick === myNick ? ' lbRowMine' : '');
+        const rank = document.createElement('span');
+        rank.className = 'lbRank';
+        rank.textContent = (i + 1) + '.';
+        const nick = document.createElement('span');
+        nick.className = 'lbNick';
+        nick.textContent = entry.nick;
+        const score = document.createElement('span');
+        score.className = 'lbScore';
+        score.textContent = formatNumber(entry.score);
+        row.append(rank, nick, score);
+        list.appendChild(row);
+      });
+    });
+  }
+
+  showTopTenBadge(rank) {
+    this.el.topTenBadge.textContent = `🏆 Você entrou no Top 10! (#${rank})`;
+    this.el.topTenBadge.style.display = 'block';
   }
 
   updateHUD({ score, coins, distance, gap, combo }) {

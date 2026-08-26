@@ -51,8 +51,11 @@ export const CONFIG = {
     totalCoins: 'runner3d_totalCoins',
     muted: 'runner3d_muted',
     introSeen: 'runner3d_introSeen',
-    skin: 'runner3d_skin'
-  }
+    skin: 'runner3d_skin',
+    nickname: 'runner3d_nickname'
+  },
+
+  LEADERBOARD_ENDPOINT: '/api/leaderboard'
 };
 
 export const OBSTACLE_TYPES = { LOW: 'low', HIGH: 'high' };
