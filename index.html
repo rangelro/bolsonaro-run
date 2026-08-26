@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Bolsonaro Run</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="gameContainer">
+
+  <!-- ==================== HUD (durante o jogo) ==================== -->
+  <div id="hud">
+    <div id="topBar">
+      <div class="statBlock">
+        <div class="label">PONTOS</div>
+        <div class="value" id="scoreText">0</div>
+        <div class="label" style="margin-top:6px;">MOEDAS: <span id="coinsText">0</span></div>
+        <div class="label">DISTÂNCIA: <span id="distanceText">0m</span></div>
+        <div id="comboText">COMBO x1</div>
+      </div>
+      <div id="gapWrap">
+        <div id="gapLabel">DISTÂNCIA DO PERSEGUIDOR</div>
+        <div id="gapBarBg"><div id="gapBarFg"></div></div>
+      </div>
+    </div>
+    <div id="powerupIcons"></div>
+    <div id="topRightControls">
+      <button class="iconBtn" id="muteBtn">🔊</button>
+      <button class="iconBtn" id="pauseBtn">⏸</button>
+    </div>
+  </div>
+
+  <!-- ==================== Controles touch ==================== -->
+  <div id="touchControls">
+    <div class="touchGroup">
+      <button class="touchBtn" id="btnLeft">◀</button>
+      <button class="touchBtn" id="btnRight">▶</button>
+    </div>
+    <div class="touchGroup">
+      <button class="touchBtn" id="btnSlide">▼</button>
+      <button class="touchBtn" id="btnJump">▲</button>
+    </div>
+  </div>
+
+  <!-- ==================== Tela de Introdução (só na primeira vez) ==================== -->
+  <div id="introScreen">
+    <video id="introVideo" src="media/video/bolsonaro-lula-chase_2026-08-26_08-13-04.mp4" playsinline></video>
+    <button id="skipIntroBtn">PULAR ▶</button>
+  </div>
+
+  <!-- ==================== Tela de Menu ==================== -->
+  <div class="screen" id="menuScreen" style="display:flex;">
+    <h1>🏃 Bolsonaro Run</h1>
+    <p>Desvie, pule, agache e fuja do perseguidor pelas 3 faixas.</p>
+    <div class="menuStats">
+      <div><div class="label" style="color:#9db0c7;font-size:11px;">RECORDE</div><div class="bigStat" id="menuHighscore">0</div></div>
+      <div><div class="label" style="color:#9db0c7;font-size:11px;">MOEDAS TOTAIS</div><div class="bigStat" id="menuTotalCoins">0</div></div>
+    </div>
+    <div id="skinSelector">
+      <div class="skinLabel">PERSONAGEM</div>
+      <div class="skinOptions">
+        <button class="skinOption" data-skin="selecao">
+          <span class="skinSwatch skinSwatchSelecao"></span>
+          Seleção
+        </button>
+        <button class="skinOption" data-skin="presidiario">
+          <span class="skinSwatch skinSwatchPresidiario"></span>
+          Presidiário
+        </button>
+        <button class="skinOption" data-skin="presidente">
+          <span class="skinSwatch skinSwatchPresidente"></span>
+          Presidente
+        </button>
+      </div>
+    </div>
+    <button class="primaryBtn" id="startBtn">JOGAR</button>
+    <p style="margin-top:18px;font-size:12px;color:#9db0c7;">
+      ← → trocar de faixa &nbsp;|&nbsp; ↑ pular &nbsp;|&nbsp; ↓ agachar &nbsp;|&nbsp; ESC pausar
+    </p>
+  </div>
+
+  <!-- ==================== Tela de Pausa ==================== -->
+  <div class="screen" id="pauseScreen">
+    <h1>Pausado</h1>
+    <button class="primaryBtn" id="resumeBtn">CONTINUAR</button>
+    <button class="secondaryBtn" id="menuFromPauseBtn">Sair para o menu</button>
+  </div>
+
+  <!-- ==================== Tela de Game Over ==================== -->
+  <div class="screen" id="gameoverScreen">
+    <h2>VOCÊ FOI ALCANÇADO!</h2>
+    <div id="newRecordBadge">🏆 NOVO RECORDE!</div>
+    <p class="statLine">Pontuação final</p>
+    <div class="bigStat" id="overFinalScore">0</div>
+    <p class="statLine" style="margin-top:10px;">Recorde: <span id="overHighscore">0</span> &nbsp;|&nbsp; Moedas nesta corrida: <span id="overCoins">0</span></p>
+    <button class="primaryBtn" id="restartBtn">JOGAR DE NOVO</button>
+  </div>
+
+</div>
+
+<script type="module" src="js/core/main.js"></script>
+</body>
+</html>
